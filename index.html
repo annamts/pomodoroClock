@@ -1,0 +1,31 @@
+<!doctype html>
+
+<html>
+    <head>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lobster|Titan+One" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Pomodoro clock</title>
+    </head>
+    <body>
+        <h1>Pomodoro Clock</h1>
+        <div id="options">
+            <div>Minutes of work: <input type="number" id="work" value="25"></div>
+            <div>Minutes of break: <input type="number" id="break" value="5"></div>
+        </div>
+        <button onclick="start($('#work').val())">Start!</button>
+        <audio><source></audio>
+        <div id="time">
+            00:00
+        </div>
+        <div>
+            Total pomodoros: <div id="total">0</div>
+        </div>
+        <button onclick="pauseTimer()"><i class="fa fa-pause"></i></button>
+        <button onclick="stop()"><i class="fa fa-stop"></i></button>
+        <button><i class="fa fa-cog"></i></button>
+        <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>
