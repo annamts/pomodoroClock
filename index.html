@@ -11,21 +11,30 @@
     </head>
     <body>
         <h1>Pomodoro Clock</h1>
-        <div id="options">
-            <div>Minutes of work: <input type="number" id="work" value="25"></div>
-            <div>Minutes of break: <input type="number" id="break" value="5"></div>
-        </div>
         <button onclick="start($('#work').val())">Start!</button>
         <audio><source></audio>
         <div id="time">
-            00:00
+            <p>25:00</p>
         </div>
-        <div>
-            Total pomodoros: <div id="total">0</div>
+        <div class="total">
+            Total pomodoros: <div class="total" id="total">0</div>
         </div>
-        <button onclick="pauseTimer()"><i class="fa fa-pause"></i></button>
-        <button onclick="stop()"><i class="fa fa-stop"></i></button>
-        <button><i class="fa fa-cog"></i></button>
+        <div class="grid-container">
+            <div id="pauseDiv" class="grid-item">
+                <button class="options" onclick="pauseTimer()"><i class="fa fa-pause"></i></button>
+            </div>
+            <div class="grid-item">
+                <button class="options" onclick="stop()"><i class="fa fa-stop"></i></button>
+            </div>
+            <div class="grid-item">
+                <button class="options" id="toggle" onclick="$('#setTime').toggle()"><i class="fa fa-cog"></i></button>
+                <div id="setTime">
+                    <p>Minutes of work: <input type="number" id="work" value="25"></p>
+                    <p>Minutes of break: <input type="number" id="break" value="5"></p>
+                    <button onclick="stop()">Apply</button>
+                </div>
+            </div>
+        </div>
         <script type="text/javascript" src="script.js"></script>
     </body>
 </html>
