@@ -89,11 +89,15 @@ function info() {
         $("#total").html(total);
         if (total == goal) {
             $("#3").addClass('full');
-        } else if (total >= goal*2/3) {
+        } 
+        if (total >= goal*2/3) {
             $("#2").addClass('full');
-        } else if (total >= goal/3) {
+        } 
+        if (total >= goal/3) {
             $("#1").addClass('full');
         }
+        //These are not else if because if goal is under 3 the first and second star might not get coloured
+        //Figure out how to get sound only when you reach a star (maybe a flag?)
         $("body").prepend(
             '<div id="info" class="popIn">' +
                     'Time for a break!' + '<br>' +
