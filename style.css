@@ -9,6 +9,30 @@ h1 {
     color: #c8d6e5;
 }
 
+#goalSetup {
+    display: none;
+}
+
+.empty {
+    color: transparent;
+   -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: #576574;
+}
+
+.full {
+    color: #feca57;
+}
+
+#stars {
+    display: inline-block;
+}
+
+.stars {
+    background-color: #48dbfb;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
 button {
     background-color: #ff6b6b;
     border-radius: 0.5rem;
@@ -66,10 +90,6 @@ button:hover {
     display: inline-block;
 }
 
-#toggle {
-    
-}
-
 #setTime {
     width: 12.5rem;
     background-color: #ff6b6b;
@@ -82,9 +102,21 @@ button:hover {
     padding-top: 3.2rem;
 }
 
-#work,
-#break {
+input {
     width: 2.5rem;
+}
+
+.ok {
+    background-color: #c8d6e5;
+    padding: 0.4rem;
+    border-radius: 0.2rem;
+}
+
+.session {
+    background-color: #c8d6e5;
+    padding : 0.5rem;
+    margin-top: 1rem;
+    margin: auto;
 }
 
 #info {

@@ -1,13 +1,14 @@
 /******************************************************************************************\
 TO DO:
+    - add extra stars for going over the goal
+    - different sound for stars
+    - different sound for goal
     - add mute button
-    - Sure you want to stop?
 
-    - fix options div
-    - add the sessions
+    - make sessions prettier
+    - make goal div prettier
     - change pop-up div
-    - make apply button prettier
-
+    
     - figure out how to size everything relative to screen height
     
 \******************************************************************************************/
@@ -19,11 +20,27 @@ var int;
 var total = 0;
 var going = false; //to avoid starting, stopping or pausing when timer is running
 var paused = false; //to avoid starting when timer is paused
-var audio = new Audio('huawei-ripple.mp3');
+var audio = new Audio('Alarm-tone.mp3');
+var minutesWork = $("#work").val();
+var minutesBreak = $("#break").val();
+var startTime;
+var endTime;
+var goal;
 
+function goalSetup() {
+    goal = $("#goal").val();
+    $("#stars").html(
+        "<div class='stars'>"+
+            "<i class='fa fa-star empty' id= '1'></i> " +
+            "<i class='fa fa-star empty' id= '2'></i> " +
+            "<i class='fa fa-star empty' id= '3'></i>" +
+        "</div>"
+    )
+}
 
 function start(x) {
     if (!going && !paused) {
+        startTime = new Date();
         var left = x*60;
         minutes = addZero(Math.floor(left/60));
         seconds = addZero(left % 60);
@@ -60,19 +77,34 @@ function addZero (x) {
 function info() {
     audio.play();
     if (work) {
+        endTime = new Date();
+        $("#sessions").prepend(
+            '<div class="session">' +
+                '<p>Start time: '+ startTime.getHours() + ':' + addZero(startTime.getMinutes()) + 
+                '   End time: ' + startTime.getHours() + ':' + addZero(startTime.getMinutes()) + 
+                '   Minutes of work: ' + minutesWork + '  Minutes of break: ' + minutesBreak + '</p>' +
+            '</div>'
+        );
         total += 1
         $("#total").html(total);
+        if (total == goal) {
+            $("#3").addClass('full');
+        } else if (total >= goal*2/3) {
+            $("#2").addClass('full');
+        } else if (total >= goal/3) {
+            $("#1").addClass('full');
+        }
         $("body").prepend(
             '<div id="info" class="popIn">' +
-                    'Time for a break!' +
-                    '<button id="ok">Ok!</button>'+
+                    'Time for a break!' + '<br>' +
+                    '<button id="ok" class="ok">Ok!</button>'+
             '</div>'  
         ); 
     } else {
         $("body").prepend(
             '<div id="info" class="popIn">' +
-                    'Go back to work!' +
-                    '<button id="ok">Ok!</button>'+
+                    'Go back to work!' + '<br>' +
+                    '<button id="ok" class="ok">Ok!</button>'+
             '</div>'   
         );         
     }
@@ -80,10 +112,10 @@ function info() {
         audio.pause();
         $("#info").addClass("popOut");
         if (work) {
-            start($("#break").val());
+            start(minutesBreak);
             work = false;
         } else {
-            start($("#work").val());
+            start(minutesWork);
             work = true;
         }
         setTimeout(removeInfo, 300);
@@ -104,11 +136,17 @@ function pauseTimer () {
         $("#pauseDiv").html(
             '<button class="options" onclick="resume()"><i class="fa fa-play"></i></button>'
         );
+        console.log("pauseIn");
     }
+    console.log("pauseOut");
 }
 
 function resume () {
-    paused = false;
+    console.log("resume");
+    paused = false; 
+    //timer is no longer paused, 
+    //going is set to true inside the start function, because otherwise it won't start
+    console.log(decimalMinutes($("#time").html()));
     start(decimalMinutes($("#time").html()));
     $("#pauseDiv").html(
         '<button class="options" onclick="pauseTimer()"><i class="fa fa-pause"></i></button>'
@@ -120,15 +158,28 @@ function decimalMinutes (x) {
 }
 
 function stop () {
-    if (going) {
+    if (!paused) {
         clearInterval(int);
         going = false;
-        total = 0;
-        $("#total").html(total);
-        var work = $("#work").val()*60
+        var work = minutesWork*60
         minutes = addZero(Math.floor(work/60));
         seconds = addZero(work % 60);
         $("#time").html(minutes + ":" + seconds);  
+    } else {
+        resume(); 
+        //so that stop will still work when timer is paused in a non-buggy way, the timer needs to be resumed
+        clearInterval(int);
+        going = false;
+        var work = minutesWork.val()*60
+        minutes = addZero(Math.floor(work/60));
+        seconds = addZero(work % 60);
+        $("#time").html(minutes + ":" + seconds);
     }
 }
 
+function apply() {
+    minutesWork = $("#work").val();
+    minutesBreak = $("#break").val();
+    $('#setTime').toggle();
+    stop();
+}

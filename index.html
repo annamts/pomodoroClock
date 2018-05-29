@@ -11,7 +11,16 @@
     </head>
     <body>
         <h1>Pomodoro Clock</h1>
-        <button onclick="start($('#work').val())">Start!</button>
+        <button onclick="start(minutesWork);">Start!</button>
+        <div id="stars">
+            <button onclick="$('#goalSetup').toggle()"><i class="fa fa-star"></i></button>
+            <div id="goalSetup">
+                My goal is to complete 
+                <input type= "number" id="goal"> 
+                pomodoros 
+                <button onclick="goalSetup();">Submit goal</button>
+            </div>
+        </div>
         <audio><source></audio>
         <div id="time">
             <p>25:00</p>
@@ -27,14 +36,22 @@
                 <button class="options" onclick="stop()"><i class="fa fa-stop"></i></button>
             </div>
             <div class="grid-item">
-                <button class="options" id="toggle" onclick="$('#setTime').toggle()"><i class="fa fa-cog"></i></button>
+                <button class="options" onclick="$('#setTime').toggle()"><i class="fa fa-cog"></i></button>
                 <div id="setTime">
                     <p>Minutes of work: <input type="number" id="work" value="25"></p>
                     <p>Minutes of break: <input type="number" id="break" value="5"></p>
-                    <button onclick="stop()">Apply</button>
+                    <button onclick="apply()" class="ok">Apply</button>
                 </div>
             </div>
         </div>
+        <h2>Your sessions:</h2>
+        <div id="sessions">
+        </div>
+        <!--
+        <div class="session">
+            <p>Start time:  End time:   Minutes of work:    Minutes of break:</p>
+        </div>
+        -->
         <script type="text/javascript" src="script.js"></script>
     </body>
 </html>
